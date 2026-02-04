@@ -216,6 +216,14 @@ const HeroSection = () => (
           </span>
         </motion.div>
 
+        {/* Countdown Timer */}
+        <motion.div variants={fadeInUp} className="pt-4">
+          <p className="text-sm font-body text-canvashaus-text-muted mb-4 uppercase tracking-wider">
+            Launching In
+          </p>
+          <CountdownTimer />
+        </motion.div>
+
         {/* CTA Buttons */}
         <motion.div 
           variants={fadeInUp}
