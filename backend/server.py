@@ -1,11 +1,11 @@
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI, APIRouter, HTTPException
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
 from pathlib import Path
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, Field, ConfigDict, EmailStr
 from typing import List
 import uuid
 from datetime import datetime, timezone
@@ -28,7 +28,7 @@ api_router = APIRouter(prefix="/api")
 
 # Define Models
 class StatusCheck(BaseModel):
-    model_config = ConfigDict(extra="ignore")  # Ignore MongoDB's _id field
+    model_config = ConfigDict(extra="ignore")
     
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     client_name: str
@@ -36,6 +36,22 @@ class StatusCheck(BaseModel):
 
 class StatusCheckCreate(BaseModel):
     client_name: str
+
+# Waitlist Models
+class WaitlistEntry(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    email: EmailStr
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class WaitlistCreate(BaseModel):
+    email: EmailStr
+
+class WaitlistResponse(BaseModel):
+    message: str
+    email: str
+
 
 # Add your routes to the router instead of directly to app
 @api_router.get("/")
@@ -65,6 +81,46 @@ async def get_status_checks():
             check['timestamp'] = datetime.fromisoformat(check['timestamp'])
     
     return status_checks
+
+
+# Waitlist Endpoints
+@api_router.post("/waitlist", response_model=WaitlistResponse)
+async def join_waitlist(input: WaitlistCreate):
+    """Add email to the waitlist"""
+    # Check if email already exists
+    existing = await db.waitlist.find_one({"email": input.email}, {"_id": 0})
+    if existing:
+        raise HTTPException(status_code=409, detail="Email already on the waitlist")
+    
+    # Create new waitlist entry
+    entry = WaitlistEntry(email=input.email)
+    doc = entry.model_dump()
+    doc['created_at'] = doc['created_at'].isoformat()
+    
+    await db.waitlist.insert_one(doc)
+    
+    return WaitlistResponse(
+        message="Successfully joined the waitlist",
+        email=input.email
+    )
+
+@api_router.get("/waitlist", response_model=List[WaitlistEntry])
+async def get_waitlist():
+    """Get all waitlist entries (admin endpoint)"""
+    entries = await db.waitlist.find({}, {"_id": 0}).to_list(1000)
+    
+    for entry in entries:
+        if isinstance(entry.get('created_at'), str):
+            entry['created_at'] = datetime.fromisoformat(entry['created_at'])
+    
+    return entries
+
+@api_router.get("/waitlist/count")
+async def get_waitlist_count():
+    """Get waitlist count"""
+    count = await db.waitlist.count_documents({})
+    return {"count": count}
+
 
 # Include the router in the main app
 app.include_router(api_router)
