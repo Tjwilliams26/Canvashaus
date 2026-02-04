@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { 
   Frame, 
@@ -47,6 +47,77 @@ const scaleIn = {
     scale: 1,
     transition: { duration: 0.5, ease: "easeOut" }
   }
+};
+
+// Countdown Component
+const CountdownTimer = () => {
+  // Set launch date - 30 days from now (adjust as needed)
+  const launchDate = new Date();
+  launchDate.setDate(launchDate.getDate() + 30);
+  
+  const calculateTimeLeft = () => {
+    const difference = launchDate.getTime() - new Date().getTime();
+    
+    if (difference <= 0) {
+      return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+    }
+    
+    return {
+      days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+      hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+      minutes: Math.floor((difference / (1000 * 60)) % 60),
+      seconds: Math.floor((difference / 1000) % 60)
+    };
+  };
+
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const timeBlocks = [
+    { value: timeLeft.days, label: "Days" },
+    { value: timeLeft.hours, label: "Hours" },
+    { value: timeLeft.minutes, label: "Minutes" },
+    { value: timeLeft.seconds, label: "Seconds" }
+  ];
+
+  return (
+    <div className="flex justify-center gap-3 md:gap-6" data-testid="countdown-timer">
+      {timeBlocks.map((block, index) => (
+        <motion.div
+          key={block.label}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8 + index * 0.1 }}
+          className="flex flex-col items-center"
+        >
+          <div className="relative">
+            <div className="w-16 h-16 md:w-20 md:h-20 bg-canvashaus-surface border border-canvashaus-border rounded-lg flex items-center justify-center overflow-hidden">
+              <motion.span 
+                key={block.value}
+                initial={{ y: -20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                className="font-heading text-2xl md:text-3xl font-bold text-canvashaus-primary"
+              >
+                {String(block.value).padStart(2, '0')}
+              </motion.span>
+            </div>
+            {/* Glow effect */}
+            <div className="absolute inset-0 bg-canvashaus-primary/5 rounded-lg blur-xl -z-10" />
+          </div>
+          <span className="text-xs md:text-sm font-body text-canvashaus-text-muted mt-2 uppercase tracking-wider">
+            {block.label}
+          </span>
+        </motion.div>
+      ))}
+    </div>
+  );
 };
 
 // Header Component
