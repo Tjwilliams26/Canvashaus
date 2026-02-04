@@ -183,8 +183,7 @@ const HeroSection = () => (
           variants={fadeInUp}
           className="font-heading text-4xl sm:text-5xl lg:text-7xl font-bold text-canvashaus-text-main leading-tight tracking-tight"
         >
-          Turn Your Memories Into<br />
-          <span className="text-gold-gradient">Museum-Quality</span> Canvas Art
+          Your Memories, <span className="text-gold-gradient">Framed Forever</span>
         </motion.h1>
 
         {/* Subtext */}
@@ -584,9 +583,12 @@ const Footer = () => (
       </div>
 
       {/* Bottom bar */}
-      <div className="mt-12 pt-8 border-t border-canvashaus-border text-center">
+      <div className="mt-12 pt-8 border-t border-canvashaus-border text-center space-y-2">
         <p className="font-body text-xs text-canvashaus-text-muted">
           © {new Date().getFullYear()} CanvasHaus. All rights reserved.
+        </p>
+        <p className="font-body text-xs text-canvashaus-text-muted/60">
+          Designed by <span className="text-canvashaus-text-muted">TJ Williams</span>
         </p>
       </div>
     </div>
