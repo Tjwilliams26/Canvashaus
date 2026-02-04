@@ -1,0 +1,132 @@
+{
+  "brand_identity": {
+    "name": "CanvasHaus",
+    "tagline": "Turn Your Memories Into Museum-Quality Canvas Art",
+    "tone": "Luxurious, Timeless, Artistic, Minimalist",
+    "archetype": "Jewel & Luxury",
+    "theme_mode": "dark"
+  },
+  "typography": {
+    "headings": {
+      "font_family": "Playfair Display, serif",
+      "weights": ["400", "600", "700"],
+      "usage": "All section titles, hero headlines. Use tracking-tight for large text.",
+      "cdn_import": "@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');"
+    },
+    "body": {
+      "font_family": "Manrope, sans-serif",
+      "weights": ["300", "400", "500"],
+      "usage": "Paragraphs, UI elements, buttons, labels."
+    }
+  },
+  "colors": {
+    "palette": {
+      "background": "#0a0a0a",
+      "surface": "#121212",
+      "surface_highlight": "#1E1E1E",
+      "primary": "#D4AF37",
+      "primary_foreground": "#000000",
+      "text_main": "#EDEDED",
+      "text_muted": "#A1A1AA",
+      "border": "#27272A",
+      "border_highlight": "#D4AF37"
+    },
+    "usage_rules": {
+      "background": "Use #0a0a0a for the main page background. Never use pure black #000000.",
+      "cards": "Use #121212 with a 1px border of #27272A. On hover, lighten border to #D4AF37 (Gold).",
+      "text": "Headings in #EDEDED. Body text in #A1A1AA. Never use pure white #FFFFFF for large blocks of text.",
+      "accents": "Use Gold (#D4AF37) sparingly for buttons, active states, and thin accent lines."
+    }
+  },
+  "layout_strategies": {
+    "spacing": {
+      "section_padding": "py-24 md:py-32",
+      "container_padding": "px-6 md:px-12 lg:px-24",
+      "element_gap": "gap-8 md:gap-12"
+    },
+    "grid_system": {
+      "type": "Bento Grid (Mode A)",
+      "rules": "Use asymmetric grids. Avoid equal-sized columns. Mix wide spans (col-span-2) with narrow spans (col-span-1)."
+    },
+    "container_width": "max-w-7xl mx-auto"
+  },
+  "visual_enhancers": {
+    "glassmorphism": "Use backdrop-blur-xl with bg-black/60 for sticky headers.",
+    "borders": "Use 1px borders with low opacity (border-white/10).",
+    "shadows": "Use subtle ambient shadows: shadow-[0_8px_32px_rgba(0,0,0,0.2)].",
+    "textures": "Overlay a subtle noise texture on the background if possible to reduce digital flatness.",
+    "animations": {
+      "scroll": "Fade-in up (y: 20 -> 0, opacity: 0 -> 1) with duration 0.6s.",
+      "hover": "Scale up slightly (1.02) and brighten borders."
+    }
+  },
+  "components": {
+    "hero_section": {
+      "style": "Immersive, full-screen height (min-h-screen).",
+      "elements": [
+        "Background: Dark, moody image with overlay.",
+        "Headline: Large Playfair Display (text-6xl md:text-8xl).",
+        "Subtext: Manrope, max-w-2xl.",
+        "CTA: Gold primary button, 'Get Early Access'."
+      ]
+    },
+    "features_grid": {
+      "style": "Bento Grid layout.",
+      "cards": "Dark surface (#121212), 1px border, icon on top left, text bottom left."
+    },
+    "waitlist_form": {
+      "style": "Tracing Beam / Glowing Border container.",
+      "elements": [
+        "Input: Minimalist, transparent bg, bottom border only or pill shape.",
+        "Button: 'Notify Me', high contrast."
+      ]
+    }
+  },
+  "assets": {
+    "images": [
+      {
+        "category": "hero_background",
+        "url": "https://images.unsplash.com/photo-1647082550285-119acfd169f2",
+        "alt": "Luxury living room with large canvas art",
+        "usage": "Hero section background with dark overlay (bg-black/70)"
+      },
+      {
+        "category": "feature_texture",
+        "url": "https://images.unsplash.com/photo-1589720815038-4b8a386f85df",
+        "alt": "Close up canvas texture",
+        "usage": "Feature card for 'Professional-grade canvas'"
+      },
+      {
+        "category": "feature_gallery",
+        "url": "https://images.unsplash.com/photo-1553077897-ba65bd40978b",
+        "alt": "Museum gallery wall",
+        "usage": "Feature card for 'Gallery-level finishing'"
+      },
+      {
+        "category": "feature_art",
+        "url": "https://images.unsplash.com/photo-1628965883071-c10b680f4cb6",
+        "alt": "Abstract dark art",
+        "usage": "Decorative element or 'Fully Personalized' section"
+      }
+    ],
+    "icons": "Use lucide-react. Recommended: Frame, Palette, Upload, Gift, Mail, ArrowRight."
+  },
+  "instructions_to_main_agent": [
+    "1. Install dependencies: `npm install framer-motion lucide-react clsx tailwind-merge sonner`.",
+    "2. Configure Tailwind: Add the colors and fonts to `tailwind.config.js`.",
+    "3. Create a `Layout` component that wraps the page with the dark theme background.",
+    "4. Build the `Hero` section using the provided image and typography.",
+    "5. Build the `Features` section using a CSS Grid (Bento style).",
+    "6. Build the `Waitlist` component with a form that connects to the backend (mock the fetch call if backend isn't ready).",
+    "7. Ensure all text has sufficient contrast (APCA/WCAG AA).",
+    "8. Add `data-testid` to all interactive elements."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "DO NOT use gradients for text.",
+    "DO NOT use 'Inter' for headings.",
+    "Always add hover states to buttons (transform, color change).",
+    "Use generous padding (py-24) between sections.",
+    "Ensure the design is responsive (mobile-first).",
+    "Use `sonner` for toast notifications."
+  ]
+}
