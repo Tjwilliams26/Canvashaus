@@ -51,8 +51,8 @@ module.exports = {
         }
       },
       fontFamily: {
-        heading: ['Playfair Display', 'serif'],
-        body: ['Manrope', 'sans-serif'],
+        heading: ['Syne', 'sans-serif'],
+        body: ['Outfit', 'sans-serif'],
       },
       borderRadius: {
         lg: 'var(--radius)',
