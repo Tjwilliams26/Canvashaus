@@ -156,7 +156,7 @@ const HeroSection = () => (
     <div 
       className="absolute inset-0 bg-cover bg-center bg-no-repeat"
       style={{ 
-        backgroundImage: `url('https://images.unsplash.com/photo-1647082550285-119acfd169f2?auto=format&fit=crop&w=2000&q=80')`
+        backgroundImage: `url('https://images.unsplash.com/photo-1663811397219-c572550dffc5?auto=format&fit=crop&w=2000&q=80')`
       }}
     />
     {/* Dark Overlay */}
