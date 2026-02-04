@@ -51,8 +51,8 @@ const scaleIn = {
 
 // Countdown Component
 const CountdownTimer = () => {
-  // Set launch date - April 5, 2025
-  const launchDate = new Date('2025-04-05T00:00:00');
+  // Set launch date - April 5, 2026
+  const launchDate = new Date('2026-04-05T00:00:00');
   
   const calculateTimeLeft = () => {
     const difference = launchDate.getTime() - new Date().getTime();
