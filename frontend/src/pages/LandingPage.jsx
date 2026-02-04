@@ -51,20 +51,21 @@ const scaleIn = {
 
 // Countdown Component
 const CountdownTimer = () => {
-  // Set launch date - 30 days from now (adjust as needed)
-  const launchDate = new Date();
-  launchDate.setDate(launchDate.getDate() + 30);
+  // Set launch date - April 5, 2025
+  const launchDate = new Date('2025-04-05T00:00:00');
   
   const calculateTimeLeft = () => {
     const difference = launchDate.getTime() - new Date().getTime();
     
     if (difference <= 0) {
-      return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+      return { hours: 0, minutes: 0, seconds: 0 };
     }
     
+    // Calculate total hours (including days converted to hours)
+    const totalHours = Math.floor(difference / (1000 * 60 * 60));
+    
     return {
-      days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-      hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+      hours: totalHours,
       minutes: Math.floor((difference / (1000 * 60)) % 60),
       seconds: Math.floor((difference / 1000) % 60)
     };
@@ -81,7 +82,6 @@ const CountdownTimer = () => {
   }, []);
 
   const timeBlocks = [
-    { value: timeLeft.days, label: "Days" },
     { value: timeLeft.hours, label: "Hours" },
     { value: timeLeft.minutes, label: "Minutes" },
     { value: timeLeft.seconds, label: "Seconds" }
